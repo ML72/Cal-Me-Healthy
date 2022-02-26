@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
         res.json(user);
     } catch(err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).json({ errors: [ { msg: 'Server Error - Please try again' } ]});
     }
 });
 
@@ -35,9 +35,13 @@ router.post('/', [
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
-
     try {
+
+        console.log("cp 1")
+
+        const { email, password } = req.body;
+
+        console.log("cp 2")
 
         const invalidCredentials = () => {
             return res.status(400).json({ errors: [ { msg: 'Invalid credentials' } ]});
@@ -47,32 +51,34 @@ router.post('/', [
         let user = await User.findOne({ email });
         if(!user) {
             invalidCredentials();
-        }
+        } else {
 
-        // make sure username and password are valid
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) {
-            invalidCredentials();
-        }
+            // make sure username and password are valid
+            const isMatch = await bcrypt.compare(password, user.password);
+            if(!isMatch) {
+                invalidCredentials();
+            } else {
 
-        // return jsonwebtoken (to authenticate)
-        const payload = {
-            user: {
-                id: user.id
+                // return jsonwebtoken (to authenticate)
+                const payload = {
+                    user: {
+                        id: user.id
+                    }
+                }
+
+                jwt.sign(payload, JWT_SECRET, {
+                    expiresIn: 259200 // 3 days
+                }, (err, token) => {
+                    if(err) { throw err; }
+                    res.json({ token });
+                })
             }
         }
-
-        jwt.sign(payload, JWT_SECRET, {
-            expiresIn: 259200 // 3 days
-        }, (err, token) => {
-            if(err) { throw err; }
-            res.json({ token });
-        })
     
     } catch(err) { 
 
         console.error(err.message);
-        res.status(500).send('Server error');
+        res.status(500).json({ errors: [ { msg: 'Server Error - Please try again' } ]});
     }
 
 });

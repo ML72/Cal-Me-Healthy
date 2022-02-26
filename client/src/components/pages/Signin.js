@@ -16,7 +16,7 @@ import Container from '@mui/material/Container';
 const Signin = ({ login, isAuthenticated }) => {
 
   if(isAuthenticated) {
-    return (<Navigate to="/dashboarsd" />);
+    return (<Navigate to="/dashboard" />);
   }
 
   const handleSubmit = (event) => {
