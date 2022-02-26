@@ -17,6 +17,8 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/signup" element={<Dashboard />} />
+        <Route exact path="/signin" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
