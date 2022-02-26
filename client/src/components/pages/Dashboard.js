@@ -72,7 +72,8 @@ const Dashboard = () => {
                     },
                     "totalNutrients": {
                       ...response2.data.nutritional_info.totalNutrients
-                    }
+                    },
+                    "servingSize": response2.data.nutritional_info.serving_size
                   }
 
                     console.log(details);
