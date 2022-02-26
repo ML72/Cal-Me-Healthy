@@ -1,9 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 // Components
+import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/layout/Navbar';
+import Landing from './components/pages/Landing';
 import Dashboard from './components/pages/Dashboard';
 import Signup from './components/pages/Signup';
 import Signin from './components/pages/Signin';
@@ -62,9 +64,10 @@ const App = () => {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route exact path="/" element={<Dashboard />} />
+            <Route exact path="/" element={<Landing />} />
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/signin" element={<Signin />} />
+            <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

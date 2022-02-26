@@ -94,7 +94,7 @@ const Signup = () => {
                   name="confirmPassword"
                   label="Confirm Password"
                   type="password"
-                  id="password"
+                  id="confirmPassword"
                   autoComplete="confirm-password"
                 />
               </Grid>
