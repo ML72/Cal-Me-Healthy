@@ -64,7 +64,7 @@ const Dashboard = () => {
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
-                    "nutritional_info": {
+                    "nutritionalInfo": {
                       "calories": response2.data.nutritional_info.calories
                     },
                     "dailyIntakeReference": {
