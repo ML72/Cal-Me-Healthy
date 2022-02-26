@@ -41,7 +41,7 @@ const Dashboard = () => {
               //should print out resulting food
               //console.log(JSON.stringify(response.data));
               //console.log(response.data.recognition_results[0].name);
-              response.json(response.data.recognition_results[0].name);
+              //response.json(response.data.recognition_results[0].name);
               //should use this to print out calorie count
               //new form data for adding it
               var data = {
@@ -61,7 +61,18 @@ const Dashboard = () => {
                 try {
                   //console.log(response2.data)
                   //console.log(response2.data.nutritional_info.calories);
-                  response.json(response2.data.nutritional_info.calories)
+
+                  var details = {
+                    "foodName": response.data.recognition_results[0].name,
+                    "nutritional_info": {
+                      "calories": response2.data.nutritional_info.calories
+                    },
+                    "dailyIntakeReference": response2.data.dailyIntakeReference,
+                    "totalNutrients": response2.data.totalNutrients
+                  }
+
+                  response.json(details);
+                  //response.json(response2.data.nutritional_info.calories)
                 }
                 catch {
                   console.error(response2.error)
