@@ -9,7 +9,9 @@ const Alerts = ({ alerts }) => {
 
   if(alerts && alerts.length > 0) {
     return (
-			<Box my={2} mx="auto" px={2} sx={{ width: Math.min(window.innerWidth, 600) }}>
+			<Box my={0.5} mx="auto" px={2} sx={{ width: Math.min(window.innerWidth, 600), zIndex: 'tooltip' }} style={{
+				position: 'fixed', right: 0, left: 0, marginRight: 'auto', marginLeft: 'auto'
+			}}>
 				<Stack sx={{ width: '100%' }} spacing={2}>
 					{
 						alerts.map(alert => (
