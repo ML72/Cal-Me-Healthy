@@ -119,7 +119,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
               >
                 Log Out
               </Button>
-              ) : (<Fragment></Fragment>)
+              ) : null
             }
           </Box>
         </Toolbar>

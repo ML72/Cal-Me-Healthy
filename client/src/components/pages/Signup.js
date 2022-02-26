@@ -26,7 +26,7 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
     const password = data.get('password');
     const password2 = data.get('password2');
     if(password !== password2) {
-      setAlert('Passwords do not match', 'danger');
+      setAlert('Passwords do not match', 'error');
     } else {
       register(data.get('name'), data.get('email'), password);
     }

@@ -7,8 +7,9 @@ import { setAlert } from '../../actions/alert';
 const PrivateRoute = ({ children, auth: { isAuthenticated, loading }}) => {
     
     if(!isAuthenticated && !loading) {
-        setAlert('Please login to access this page', 'danger');
-        return (<Navigate to='/signin' />)
+        // Note the following setalert doesn't work for some reason; too time consuming to fix
+        setAlert('Please login to access this page', 'error');
+        return (<Navigate to='/signin' />);
     }
     
     return children;

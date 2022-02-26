@@ -5,6 +5,7 @@ import './App.css';
 // Components
 import PrivateRoute from './components/routing/PrivateRoute';
 import Navbar from './components/layout/Navbar';
+import Alerts from './components/layout/Alerts';
 import Landing from './components/pages/Landing';
 import Dashboard from './components/pages/Dashboard';
 import Signup from './components/pages/Signup';
@@ -63,6 +64,7 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Navbar />
+          <Alerts />
           <Routes>
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/signup" element={<Signup />} />
