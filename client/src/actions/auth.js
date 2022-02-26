@@ -35,7 +35,7 @@ export const loadUser = () => async dispatch => {
 }
 
 // Register user
-export const register = ({ name, email, password }) => async dispatch => {
+export const register = (name, email, password) => async dispatch => {
 
     const config = {
         headers: {
@@ -82,7 +82,7 @@ export const login = (email, password) => async dispatch => {
 
     try {
 
-        const res = await axios.post('/api/authentication', body, config);
+        const res = await axios.post('/api/auth', body, config);
         
         dispatch({
             type: LOGIN_SUCCESS,

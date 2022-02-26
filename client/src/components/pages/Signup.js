@@ -1,28 +1,35 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register } from '../../actions/auth';
+import { setAlert } from '../../actions/alert';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const Signup = () => {
+const Signup = ({ setAlert, register, isAuthenticated }) => {
+
+  if(isAuthenticated) {
+    return (<Navigate to="/dashboard" />);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const password = data.get('password');
+    const password2 = data.get('password2');
+    if(password !== password2) {
+      setAlert('Passwords do not match', 'danger');
+    } else {
+      register(data.get('name'), data.get('email'), password);
+    }
   };
 
   return (
@@ -45,25 +52,15 @@ const Signup = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -91,10 +88,10 @@ const Signup = () => {
                 <TextField
                   required
                   fullWidth
-                  name="confirmPassword"
+                  name="password2"
                   label="Confirm Password"
                   type="password"
-                  id="confirmPassword"
+                  id="password2"
                   autoComplete="confirm-password"
                 />
               </Grid>
@@ -109,7 +106,7 @@ const Signup = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signin">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -121,4 +118,14 @@ const Signup = () => {
   );
 }
 
-export default Signup;
+Signup.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Signup);;
