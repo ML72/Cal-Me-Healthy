@@ -5,6 +5,8 @@ import './App.css';
 
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/pages/Dashboard';
+import Signup from './components/pages/Signup';
+import Signin from './components/pages/Signin';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -17,8 +19,8 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/signup" element={<Dashboard />} />
-        <Route exact path="/signin" element={<Dashboard />} />
+        <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/signin" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
