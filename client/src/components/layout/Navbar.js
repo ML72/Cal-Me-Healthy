@@ -100,6 +100,7 @@ const Navbar = () => {
             {pages.map((page) => (
               <Link to={page.link} key={page.text} style={{ textDecoration: 'none' }}>
                 <Button
+                  style={{ color: "#004928" }}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
