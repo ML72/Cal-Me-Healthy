@@ -34,8 +34,15 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
+      <CssBaseline />
+      <Box
+        sx={{
+          background: "linear-gradient(#b3e9d0, #fff)",
+          pt: 1,
+          pb: 6
+        }}
+      >
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -104,7 +111,7 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container>
               <Grid item>
                 <Link to="/signin">
                   Already have an account? Sign in
@@ -114,6 +121,7 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
           </Box>
         </Box>
       </Container>
+      </Box>
     </Fragment>
   );
 }

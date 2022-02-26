@@ -30,7 +30,7 @@ const ctheme = createTheme({
   palette: {
     primary: {
       // green primary
-      main: "#01B763"
+      main: "#01B763",
       contrastText: "#fff"
     },
     secondary: {

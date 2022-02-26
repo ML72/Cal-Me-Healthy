@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -19,8 +19,8 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   let pages = [];
   if(!isAuthenticated) {
     pages = [{text: 'Home', link: '/'},
-      {text: 'Sign In', link: '/signin'},
-      {text: 'Sign Up', link: '/signup'}];
+      {text: 'Sign Up', link: '/signup'},
+      {text: 'Sign In', link: '/signin'}];
   } else {
     pages = [{text: 'Dashboard', link: '/dashboard'},
       {text: 'History', link: '/history'},
@@ -49,7 +49,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           >
             CalMeHealthy
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

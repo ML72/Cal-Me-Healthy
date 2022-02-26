@@ -16,7 +16,7 @@ import Container from '@mui/material/Container';
 const Signin = ({ login, isAuthenticated }) => {
 
   if(isAuthenticated) {
-    return (<Navigate to="/dashboard" />);
+    return (<Navigate to="/dashboarsd" />);
   }
 
   const handleSubmit = (event) => {
@@ -27,8 +27,15 @@ const Signin = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
+      <CssBaseline />
+      <Box
+        sx={{
+          background: "linear-gradient(#b3e9d0, #fff)",
+          pt: 1,
+          pb: 6
+        }}
+      >
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -82,6 +89,7 @@ const Signin = ({ login, isAuthenticated }) => {
           </Box>
         </Box>
       </Container>
+      </Box>
     </Fragment>
   );
 }
