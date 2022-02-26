@@ -22,7 +22,7 @@ const Dashboard = () => {
   //   <video autoplay id="webcam" width="227" height="227"></video>
   // }
 
-  function callAPI(fileData) {
+  const callAPI = (fileData) => {
       const headers = {
               'Authorization': 'Bearer af1c3893553aadd68d66a2e001df362d63dba335',
               'Content-Type': 'multipart/form-data',
@@ -60,18 +60,24 @@ const Dashboard = () => {
               request2.then(response2 => {
                 try {
                   //console.log(response2.data)
-                  //console.log(response2.data.nutritional_info.calories);
+                  //console.log(response2.data.dail);
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
                     "nutritional_info": {
                       "calories": response2.data.nutritional_info.calories
                     },
-                    "dailyIntakeReference": response2.data.dailyIntakeReference,
-                    "totalNutrients": response2.data.totalNutrients
+                    "dailyIntakeReference": {
+                      ...response2.data.nutritional_info.dailyIntakeReference
+                    },
+                    "totalNutrients": {
+                      ...response2.data.nutritional_info.totalNutrients
+                    }
                   }
 
-                  response.json(details);
+                    console.log(details);
+                    sendRes(details);
+                  //response.json(details);
                   //response.json(response2.data.nutritional_info.calories)
                 }
                 catch {
@@ -84,6 +90,11 @@ const Dashboard = () => {
               console.error(response.error)
             }
           })
+}
+
+  const sendRes = (details) => {
+    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
+    return requestBE.then(response => response.data)
   }
   
   return (
