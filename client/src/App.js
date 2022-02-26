@@ -31,6 +31,7 @@ const ctheme = createTheme({
     primary: {
       // green primary
       main: "#01B763"
+      contrastText: "#fff"
     },
     secondary: {
       // purple secondary
@@ -42,13 +43,12 @@ const ctheme = createTheme({
     },
   },
   spacing: 10,
-  divider: "rgba(0,55,30,0.31)",
+  divider: "rgba(0,55,30,0.25)",
   shape: {
-    borderRadius: 6
+    borderRadius: 5
   },
   typography: {
     fontSize: 14,
-    fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
     fontWeightBold: 800
   }
 });
