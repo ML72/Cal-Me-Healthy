@@ -1,4 +1,8 @@
-import * as React from 'react';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { logout } from '../../actions/auth';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,35 +10,31 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
 
-const pages = [{text: 'Home', link: '/'},
-  {text: 'Sign In', link: '/signin'},
-  {text: 'Sign Up', link: '/signup'}];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
-const Navbar = () => {
+  let pages = [];
+  if(!isAuthenticated) {
+    pages = [{text: 'Home', link: '/'},
+      {text: 'Sign In', link: '/signin'},
+      {text: 'Sign Up', link: '/signup'}];
+  } else {
+    pages = [{text: 'Dashboard', link: '/dashboard'},
+      {text: 'History', link: '/history'},
+      {text: 'Analytics', link: '/analytics'}];
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -111,37 +111,30 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircle />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            { isAuthenticated && !loading ?
+              (<Button
+                style={{ color: "#004928" }}
+                onClick={logout}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Log Out
+              </Button>
+              ) : (<Fragment></Fragment>)
+            }
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
-export default Navbar;
+
+Navbar.propTypes = {
+  isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+  logout: PropTypes.func.isRequired,
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);

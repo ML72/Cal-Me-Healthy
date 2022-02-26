@@ -8,7 +8,7 @@ const PrivateRoute = ({ children, auth: { isAuthenticated, loading }}) => {
     
     if(!isAuthenticated && !loading) {
         setAlert('Please login to access this page', 'danger');
-        return (<Navigate to='/signup' />)
+        return (<Navigate to='/signin' />)
     }
     
     return children;
