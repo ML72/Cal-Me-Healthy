@@ -10,6 +10,7 @@ import { Link, Navigate } from 'react-router-dom';
 import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
+import { LOGMEAL_TOKEN } from '../../settingss';
 
 const Input = styled("input")({
   display: "none"
@@ -71,12 +72,12 @@ const Snap = (props) => {
   const callAPI = (fileData) => {
       //Headers for first request, where sending form data w/ image
       const headers = {
-              'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb',
+              'Authorization': LOGMEAL_TOKEN,
               'Content-Type': 'multipart/form-data',
             }
 
       const headersForCalories = {
-        'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb'
+        'Authorization': LOGMEAL_TOKEN
       }
       //initial request
           var request = axios.post(
@@ -155,7 +156,6 @@ const Snap = (props) => {
       console.log({details});
       await axios.post("/api/food/snap", {details})
     }
-
   });
   
 
@@ -166,9 +166,17 @@ const Snap = (props) => {
 
   return (
     <Container maxWidth="sm" align="center">
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-				{props.children}
-			</Typography>
+      <Typography
+        sx={{ pt: 2 }}
+        component="h1"
+        variant="h3"
+        fontWeight="fontWeightMedium"
+        align="center"
+        color="text.primary"
+        gutterBottom
+      >
+        Snap or upload a pic!
+      </Typography>
       <div className = "parent">
       <div className="overlap">
         <div className="overlap-1"> 
@@ -249,7 +257,9 @@ const Snap = (props) => {
                 </Button>
               </label>
                 :
-                <p> Take a pic first to submit! </p>     
+                <p>
+                  
+                </p>
           }
 
         </Stack>
