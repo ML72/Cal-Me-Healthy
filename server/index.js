@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const connectDB = require('./config/database');
 const { PORT } = require('./settings');
 
@@ -15,7 +16,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/food', require('./routes/food'));
 
 // Serve static assets in production
-// something about importing path and whatnot, do this later
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 // Let app listen!
 app.listen(PORT, () => {
