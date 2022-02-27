@@ -101,7 +101,7 @@ const Snap = (props) => {
               request2.then(response2 => {
                 try {
                   //creates object to send to backend
-                  var details = {
+                  var details2 = {
                     "foodName": response.data.recognition_results[0].name,
                     "foodGroup": response.data.foodFamily[0].name,
                     "nutritionalInfo": {
@@ -116,10 +116,10 @@ const Snap = (props) => {
                     "servingSize": response2.data.serving_size
                   }
 
-                  console.log(details);
+                  console.log(details2);
                   setFoodVals(response2.data.nutritional_info.calories);
                   //sendRes(details);
-                  setDetailsInput(details);
+                  setDetailsInput(details2);
                 }
                 catch {
                   console.error(response2.error)
@@ -149,9 +149,10 @@ const Snap = (props) => {
   // //   await axios.post("/api/food/snap", {details})
   // // }
 
-  useEffect(async (details) => {
+  useEffect(async () => {
     if (detailsInput.foodName != "") {
-      console.log(detailsInput);
+      const details = {...detailsInput};
+      console.log({details});
       await axios.post("/api/food/snap", {details})
     }
 
