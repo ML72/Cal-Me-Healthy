@@ -24,7 +24,7 @@ router.post('/snap', auth, [
     try {
 
         const { details } = req.body;
-        const { foodName, foodGroup, servingSize, nutritionalInfo, dailyIntakeReference, totalNutrients } = details;
+        const { foodName, foodGroup, occasion, servingSize, nutritionalInfo, dailyIntakeReference, totalNutrients } = details;
 
         if(!foodName) {
             return res.status(400).json({ errors: [ { msg: 'Please provide a name for your food!' } ]});
@@ -35,6 +35,7 @@ router.post('/snap', auth, [
             data: {
                 foodName,
                 foodGroup,
+                occasion,
                 servingSize,
                 nutritionalInfo,
                 dailyIntakeReference,
@@ -126,6 +127,46 @@ router.get('/history/page/:page', auth, async (req, res) => {
             snapshot = await Snapshot.findById(snapshotIndices[i]);
             snapshots.push(snapshot);
         }
+
+        res.json({
+            snapshots
+        });
+    
+    } catch(err) { 
+
+        console.error(err.message);
+        res.status(500).json({ errors: [ { msg: 'Server Error - Please check parameters and try again' } ]});
+    }
+
+});
+
+// @route GET api/food/history/range?from=xxx&to=xxx
+// @desc get information about a specific date range of snapshots, inclusive; "from" and "to" are both integers
+// @access private
+router.get('/history/range', auth, async (req, res) => {
+
+    try {
+
+        let { from, to } = req.query;
+
+        if(!from) {
+            from = 0;
+        }
+        if(!to) {
+            to = new Date().getTime();
+        }
+
+        // obtain snapshots
+        let user = await User.findById(req.user.id);
+        
+        let snapshots = [];
+        let snapshot = null;
+        for(let i = 0; i < user.snapshots.length; i++) {
+            snapshot = await Snapshot.findById(user.snapshots[i]);
+            snapshots.push(snapshot);
+        }
+
+        snapshots = snapshots.filter((snapshot) => snapshot.created.getTime() <= to && snapshot.created.getTime() >= from);
 
         res.json({
             snapshots

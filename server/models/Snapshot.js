@@ -6,6 +6,7 @@ const SnapshotSchema = new Schema({
     data: {
         foodName: String,
         foodGroup: String,
+        occasion: String,
         servingSize: Number,
         nutritionalInfo: Object,
         dailyIntakeReference: Object,
