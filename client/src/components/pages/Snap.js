@@ -11,6 +11,7 @@ import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
 import { LOGMEAL_TOKEN } from '../../settings';
+import { setAlert } from '../../actions/alert';
 
 const Input = styled("input")({
   display: "none"
@@ -155,6 +156,7 @@ const Snap = (props) => {
       const details = {...detailsInput};
       console.log({details});
       await axios.post("/api/food/snap", {details})
+      setAlert('Your snap has been uploaded!', 'success');
     }
   });
   
