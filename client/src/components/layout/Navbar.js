@@ -48,6 +48,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <AppBar position="static" style={{ background: "#b3e9d0", color: "#004928" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+        <Box
+            component="img"
+            sx={{
+              width: "36px",
+              pr: 0.3,
+              pb: 1
+            }}
+            src="https://i.ibb.co/j8ww08L/logo2.png"
+            style={{ userSelect: "none" }}
+          />
         <ThemeProvider theme={logoTheme}>
           <Typography
             variant="h5"

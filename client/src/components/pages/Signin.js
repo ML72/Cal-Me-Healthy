@@ -3,13 +3,12 @@ import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
@@ -37,9 +36,16 @@ const Signin = ({ login, isAuthenticated }) => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Box
+            component="img"
+            sx={{
+              width: "60px",
+              pl: 1.5,
+              pb: 1.8
+            }}
+            src="https://i.ibb.co/j8ww08L/logo2.png"
+            style={{ userSelect: "none" }}
+          />
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
