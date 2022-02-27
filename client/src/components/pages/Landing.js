@@ -81,12 +81,16 @@ const Landing = ({ isAuthenticated }) => {
               spacing={2}
               justifyContent="center"
             >
-                <Button variant="contained" size="large" fullWidth="true" href="/signup">
+              <Link to="/signup" style={{ textDecoration: "none", width: "100%" }}>
+                <Button variant="contained" size="large" fullWidth="true">
                   Sign up
                 </Button>
-                <Button variant="outlined" size="large" fullWidth="true" href="/signin">
+              </Link>
+              <Link to="/signin" style={{ textDecoration: "none", width: "100%" }}>
+                <Button variant="outlined" size="large" fullWidth="true">
                   Sign in
                 </Button>
+              </Link>
             </Stack>
           </Container>
         <Container sx={{ py: 7 }} maxWidth="lg">
