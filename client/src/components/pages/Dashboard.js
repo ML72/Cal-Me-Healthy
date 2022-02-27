@@ -41,21 +41,37 @@ const Dashboard = () => {
   )
 
   const submit = () => {
-    console.log(image);
+    //console.log(image);
     const data = new FormData();
-    data.append('image', image);
+    data.append('image', dataURLtoFile(image, 'food.jpg'));
     callAPI(data);
   }
+
+  function dataURLtoFile(dataurl, filename) {
+ 
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+        
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new File([u8arr], filename, {type:mime});
+}
+
 
   //calling the API
 
   const callAPI = (fileData) => {
       const headers = {
-              'Authorization': 'Bearer af1c3893553aadd68d66a2e001df362d63dba335',
+              'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b',
               'Content-Type': 'multipart/form-data',
             }
       const headersForCalories = {
-        'Authorization': 'Bearer af1c3893553aadd68d66a2e001df362d63dba335'
+        'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b'
       }
       //initial request
           var request = axios.post(
