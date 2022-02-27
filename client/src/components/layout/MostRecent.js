@@ -1,19 +1,38 @@
+import axios from 'axios';
 import * as React from "react";
-import Link from "@mui/material/Link";
+import { useEffect, useState  } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Title from "./Title";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 const MostRecent = () => {
+
+	const [data, setData] = useState({
+		name: "",
+		calories: 0,
+		date: new Date()
+	});
+
+	useEffect(async () => {
+		if(data.name == "" || data.calories == 0) {
+			const res = await axios.get('/api/food/entry');
+			let { snapshot } = res.data;
+			setData(
+				{
+					name: snapshot.data.foodName,
+					calories: snapshot.data.nutritionalInfo.calories,
+					date: new Date(snapshot.created)
+				}
+			);
+		}
+	});
+	
+
   return (
     <React.Fragment>
       <Title>Last Entry</Title>
       <Typography component="p" variant="h5">
-        morning brunch
+        { data.name }
       </Typography>
       <Typography
         component="p"
@@ -21,19 +40,14 @@ const MostRecent = () => {
         variant="h6"
         sx={{ py: 1 }}
       >
-        350 CALORIES
+        { data.calories }K CALORIES
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         <Box color="text.primary" display="inline">
-          10:35
+          { String(data.date.getHours()).padStart(2, '0') }:{ String(data.date.getMinutes()).padStart(2, '0') }
         </Box>{" "}
-        on 25 February, 2022
+        on { data.date.getMonth() + 1}/{ data.date.getDate() }/{ data.date.getFullYear() }
       </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View details
-        </Link>
-      </div>
     </React.Fragment>
   );
 }

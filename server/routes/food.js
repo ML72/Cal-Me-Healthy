@@ -72,12 +72,12 @@ router.get('/entry', auth, async (req, res) => {
 
         let { index } = req.query;
 
-        if(!index) {
-            index = 1;
-        }
-
         // get and test index
         let user = await User.findById(req.user.id);
+
+        if(!index) {
+            index = user.snapshots.length;
+        }
         
         if(index < 1 || index > user.snapshots.length) {
             return res.status(400).json({ errors: [ { msg: 'Invalid entry index for ' + user.email } ]});

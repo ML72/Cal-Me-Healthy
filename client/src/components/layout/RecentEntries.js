@@ -1,4 +1,6 @@
+import axios from 'axios';
 import * as React from "react";
+import { useEffect, useState  } from "react";
 import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,26 +15,48 @@ function createData(id, name, date, time, mealType, calCount) {
   return { id, name, date, time, mealType, calCount };
 }
 
-const rows = [
-  createData(0, "morning brunch", "26 Feb 2022", "10:35", "Breakfast", 350),
-  createData(1, "late dinner", "25 Feb 2022", "23:12", "Dinner", 470),
-  createData(2, "movies snack", "25 Feb 2022", "16:23", "Snack", 115),
-  createData(3, "cont breakfast", "25 Feb 2022", "07:45", "Breakfast", 540),
-  createData(4, "fast food trip", "24 Feb 2022", "17:34", "Dinner", 480),
-  createData(5, "morning brunch", "24 Feb 2022", "10:35", "Breakfast", 350),
-  createData(6, "late dinner", "23 Feb 2022", "23:12", "Dinner", 470),
-  createData(7, "movies snack", "23 Feb 2022", "16:23", "Snack", 115),
-  createData(8, "cont breakfast", "23 Feb 2022", "07:45", "Breakfast", 540),
-  createData(9, "fast food trip", "22 Feb 2022", "17:34", "Dinner", 480)
-];
-
-const slicedRows = rows.slice(0, 5);
-
 function preventDefault(event) {
   event.preventDefault();
 }
 
 const RecentEntries = () => {
+
+  const [rows, setRows] = useState([]);
+
+  useEffect(async () => {
+		if(rows.length < 1) {
+			const res = await axios.get('/api/food/history/page/1');
+			let { snapshots } = res.data;
+      while(snapshots.length > 5) {
+        snapshots = snapshots.slice(1, snapshots.length);
+      }
+      let tempRows = [];
+      let date = new Date();
+      snapshots.forEach(snapshot => {
+        date = new Date(snapshot.created);
+        tempRows.push({
+          id: snapshot._id,
+          name: snapshot.data.foodName,
+          date: (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+          time: String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0'),
+          mealType: snapshot.data.occasion ? snapshot.data.occasion : "",
+          calCount: snapshot.data.nutritionalInfo.calories
+        });
+      });
+      if(tempRows.length < 1) {
+        tempRows.push({
+          id: "",
+          name: "No recent entries",
+          date: "",
+          time: "",
+          mealType: "",
+          calCount: 0
+        });
+      }
+      setRows(tempRows);
+		}
+	});
+
   return (
     <React.Fragment>
       <Title>Recent Entries</Title>
@@ -42,18 +66,16 @@ const RecentEntries = () => {
             <TableCell>Entry Name</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Time</TableCell>
-            <TableCell>Category</TableCell>
             <TableCell align="right">Calories</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {slicedRows.map((slicedRow) => (
-            <TableRow key={slicedRow.id}>
-              <TableCell>{slicedRow.name}</TableCell>
-              <TableCell>{slicedRow.date}</TableCell>
-              <TableCell>{slicedRow.time}</TableCell>
-              <TableCell>{slicedRow.mealType}</TableCell>
-              <TableCell align="right">{`${slicedRow.calCount} kCal`}</TableCell>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.date}</TableCell>
+              <TableCell>{row.time}</TableCell>
+              <TableCell align="right">{row.calCount + ' kCal'}</TableCell>
             </TableRow>
           ))}
         </TableBody>
