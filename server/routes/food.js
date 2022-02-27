@@ -62,4 +62,41 @@ router.post('/snap', auth, [
 
 });
 
+// @route GET api/food/entry
+// @desc get information about a specific snapshot
+// @access private
+router.get('/entry', auth, async (req, res) => {
+
+    try {
+
+        let { index } = req.query;
+
+        console.log("index is " + index);
+
+        if(!index) {
+            index = 1;
+        }
+
+        // get and test index
+        let user = await User.findById(req.user.id);
+        
+        if(index < 1 || index > user.snapshots.length) {
+            return res.status(400).json({ errors: [ { msg: 'Invalid entry index for ' + user.email } ]});
+        }
+
+        // get snapshot
+        let snapshot = await Snapshot.findById(user.snapshots[index - 1]);
+
+        res.json({
+            snapshot
+        });
+    
+    } catch(err) { 
+
+        console.error(err.message);
+        res.status(500).json({ errors: [ { msg: 'Server Error - Please check parameters and try again' } ]});
+    }
+
+});
+
 module.exports = router;
