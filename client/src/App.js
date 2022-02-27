@@ -22,6 +22,7 @@ import setAuthToken from './utils/setAuthToken';
 
 // Styles
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from '@mui/material/Box';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -66,16 +67,24 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Navbar />
-          <Alerts />
-          <Routes>
-            <Route exact path="/" element={<Landing />} />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/signin" element={<Signin />} />
-            <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-            <Route exact path="/snap" element={<PrivateRoute><Snap /></PrivateRoute>} />
-            <Route exact path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Box
+            sx={{
+              background: "linear-gradient(#b3e9d0, #fff, #fff)",
+              pt: 1,
+              pb: 10,
+            }}
+          >
+            <Alerts />
+            <Routes>
+              <Route exact path="/" element={<Landing />} />
+              <Route exact path="/signup" element={<Signup />} />
+              <Route exact path="/signin" element={<Signin />} />
+              <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+              <Route exact path="/snap" element={<PrivateRoute><Snap /></PrivateRoute>} />
+              <Route exact path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Box>
         </BrowserRouter>
       </Provider>
     </ThemeProvider>

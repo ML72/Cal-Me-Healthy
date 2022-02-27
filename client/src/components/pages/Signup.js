@@ -35,13 +35,6 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
   return (
     <Fragment>
       <CssBaseline />
-      <Box
-        sx={{
-          background: "linear-gradient(#b3e9d0, #fff)",
-          pt: 1,
-          pb: 6
-        }}
-      >
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -121,7 +114,6 @@ const Signup = ({ setAlert, register, isAuthenticated }) => {
           </Box>
         </Box>
       </Container>
-      </Box>
     </Fragment>
   );
 }

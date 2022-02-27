@@ -28,13 +28,6 @@ const Signin = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <CssBaseline />
-      <Box
-        sx={{
-          background: "linear-gradient(#b3e9d0, #fff)",
-          pt: 1,
-          pb: 6
-        }}
-      >
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -89,7 +82,6 @@ const Signin = ({ login, isAuthenticated }) => {
           </Box>
         </Box>
       </Container>
-      </Box>
     </Fragment>
   );
 }

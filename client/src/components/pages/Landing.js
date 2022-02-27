@@ -44,13 +44,6 @@ const Landing = ({ isAuthenticated }) => {
     <Fragment>
       <CssBaseline />
       <main>
-        <Box
-          sx={{
-            background: "linear-gradient(#b3e9d0, #fff)",
-            pt: 8,
-            pb: 6
-          }}
-        >
           <Container maxWidth="sm" align="center">
             <Box
               component="img"
@@ -96,7 +89,6 @@ const Landing = ({ isAuthenticated }) => {
                 </Button>
             </Stack>
           </Container>
-        </Box>
         <Container sx={{ py: 7 }} maxWidth="lg">
           <Typography
             sx={{ pb: 4 }}
