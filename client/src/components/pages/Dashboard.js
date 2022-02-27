@@ -1,23 +1,96 @@
-import React, { Fragment } from 'react';
-import { useHistory } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-  
+import * as React from "react";
+import { Fragment } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
+
+import MostRecent from "../layout/MostRecent";
+import RecentEntries from "../layout/RecentEntries";
+import WeeklyChart from "../layout/WeeklyChart";
+import NewEntry from "../layout/NewEntry";
+
+const Copyright = (props) => {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="#">
+        CalMeHealthy
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
 const Dashboard = () => {
-
-  // const history = useHistory();
-  // const moveTo = () => {
-
-  // }
 
   return (
     <Fragment>
-      <Typography variant="h1" component="div" align="center" sx={{ my: "1rem" }}>
-        Dashboard
-      </Typography>
+      <CssBaseline />
 
-      {/* <button onClick="history.push('/upload.js')"> Upload new food image! </button> */}
+      <Typography component="h1" variant="h4" color="text.primary" align="center">
+				Welcome!
+			</Typography>
 
-      </Fragment>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={3}>
+          {/* New Entry */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 320
+              }}
+            >
+              <NewEntry />
+            </Paper>
+          </Grid>
+          {/* Daily Stats */}
+          <Grid item xs={12} md={8} lg={9}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 320
+              }}
+            >
+              <WeeklyChart />
+            </Paper>
+          </Grid>
+          {/* Recent Entries */}
+          <Grid item xs={12} md={7} lg={8}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <RecentEntries />
+            </Paper>
+          </Grid>
+          {/* Last Entry */}
+          <Grid item xs={12} md={5} lg={4}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: "100%"
+              }}
+            >
+              <MostRecent />
+            </Paper>
+          </Grid>
+        </Grid>
+        <Copyright sx={{ pt: 4 }} />
+      </Container>
+    </Fragment>
   );
 }
 
