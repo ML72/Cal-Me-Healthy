@@ -16,6 +16,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    snapshots: [Schema.Types.ObjectId],
     created: {
         type: Date,
         default: Date.now

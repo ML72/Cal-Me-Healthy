@@ -37,11 +37,7 @@ router.post('/', [
 
     try {
 
-        console.log("cp 1")
-
         const { email, password } = req.body;
-
-        console.log("cp 2")
 
         const invalidCredentials = () => {
             return res.status(400).json({ errors: [ { msg: 'Invalid credentials' } ]});

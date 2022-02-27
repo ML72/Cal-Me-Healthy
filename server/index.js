@@ -12,6 +12,7 @@ connectDB();
 // Routing
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/food', require('./routes/food'));
 
 // Serve static assets in production
 // something about importing path and whatnot, do this later
