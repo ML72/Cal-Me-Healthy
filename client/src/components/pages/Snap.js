@@ -10,7 +10,7 @@ import { Link, Navigate } from 'react-router-dom';
 import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-import  { LOGMEAL_TOKEN } from '../../../../server/settings';
+import  { LOGMEAL_TOKEN } from '../../settings';
 
 const Input = styled("input")({
   display: "none"
