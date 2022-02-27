@@ -1,9 +1,16 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, Component, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import Webcam from 'react-webcam';
 // import styled from 'styled-components';
 
 const Dashboard = () => {
+
+  //UPLOADING FILE
+  const sendRes = (details) => {
+    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
+    return requestBE.then(response => response.data)
+  }
 
   const inputFile = useRef(null);
 
@@ -18,17 +25,53 @@ const Dashboard = () => {
     inputFile.current.click();
   };
 
-  // const takePic = () => {
-  //   <video autoplay id="webcam" width="227" height="227"></video>
-  // }
+  // TAKING IMAGE
+  
+  const [image, setImage] = React.useState(null);
+  const webcamRef = React.useRef(null);
+
+  const dimensions = {width: 512, height: 512};
+
+  const capture = React.useCallback((event) => {
+          event.preventDefault();
+          const imageSrc = webcamRef.current.getScreenshot({width: 512, height: 512});
+          setImage(imageSrc);
+      },
+      [webcamRef]
+  )
+
+  const submit = () => {
+    //console.log(image);
+    const data = new FormData();
+    data.append('image', dataURLtoFile(image, 'food.jpg'));
+    callAPI(data);
+  }
+
+  function dataURLtoFile(dataurl, filename) {
+ 
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+        
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new File([u8arr], filename, {type:mime});
+}
+
+
+  //calling the API
 
   const callAPI = (fileData) => {
       const headers = {
-              'Authorization': 'Bearer af1c3893553aadd68d66a2e001df362d63dba335',
+              'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b',
               'Content-Type': 'multipart/form-data',
             }
       const headersForCalories = {
-        'Authorization': 'Bearer af1c3893553aadd68d66a2e001df362d63dba335'
+        'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b'
       }
       //initial request
           var request = axios.post(
@@ -64,6 +107,7 @@ const Dashboard = () => {
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
+                    "foodGroup": response.data.foodFamily.name,
                     "nutritionalInfo": {
                       "calories": response2.data.nutritional_info.calories
                     },
@@ -92,11 +136,6 @@ const Dashboard = () => {
             }
           })
 }
-
-  const sendRes = (details) => {
-    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
-    return requestBE.then(response => response.data)
-  }
   
   return (
     <Fragment>
@@ -105,6 +144,28 @@ const Dashboard = () => {
       </Typography>
       <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={onChangeFile}/>
       <button onClick={onButtonClick}>Upload a File! </button>
+      <Webcam 
+        audio={false}
+        ref={webcamRef}
+        videoConstraints={dimensions}
+        screenshotFormat = "image/jpeg"
+      />
+      <button onClick={(event) => {capture(event)}}> Take a Pic! </button>
+      
+      {image && (
+          <img 
+            src={image}
+          />
+        )
+      }
+
+      {image != null ? 
+        <button onClick={submit()}> Submit pic </button> 
+        :
+        <p> Take a pic first to submit! </p>     
+      }
+      
+
     </Fragment>
   );
 }
