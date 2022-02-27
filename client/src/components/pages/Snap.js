@@ -10,7 +10,6 @@ import { Link, Navigate } from 'react-router-dom';
 import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-import  { LOGMEAL_TOKEN } from '../../settings';
 
 const Input = styled("input")({
   display: "none"
@@ -72,12 +71,12 @@ const Snap = (props) => {
   const callAPI = (fileData) => {
       //Headers for first request, where sending form data w/ image
       const headers = {
-              'Authorization': LOGMEAL_TOKEN,
+              'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb',
               'Content-Type': 'multipart/form-data',
             }
 
       const headersForCalories = {
-        'Authorization': LOGMEAL_TOKEN
+        'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb'
       }
       //initial request
           var request = axios.post(
@@ -120,6 +119,7 @@ const Snap = (props) => {
                   console.log(details);
                   setFoodVals(response2.data.nutritional_info.calories);
                   //sendRes(details);
+                  setDetailsInput(details);
                 }
                 catch {
                   console.error(response2.error)
@@ -136,21 +136,26 @@ const Snap = (props) => {
   //CURRENT AREA BEING EDITED
 
 
-  // const [detailsInput, setDetailsInput] = useState({
-  //   "foodName": "",
-  //   "foodGroup": "".
-  //   "servingSize"
-  // })
+  const [detailsInput, setDetailsInput] = useState({
+    "foodName": "",
+    "foodGroup": "",
+    "servingSize": 0,
+    "nutritionalInfo": {},
+    "dailyIntakeReference": {},
+    "totalNutrients": {}
+  })
 
   // // const sendRes = (details) => {
   // //   await axios.post("/api/food/snap", {details})
   // // }
 
-  // useEffect(async (details) => {
-  
-  //     await axios.post("/api/food/snap", {details})
- 
-  // });
+  useEffect(async (details) => {
+    if (detailsInput.foodName != "") {
+      console.log(detailsInput);
+      await axios.post("/api/food/snap", {details})
+    }
+
+  });
   
 
   const uploadFile = () => {
