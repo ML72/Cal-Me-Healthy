@@ -41,7 +41,7 @@ const Snap = (props) => {
           const imageSrc = webcamRef.current.getScreenshot({width: 512, height: 512});
           setImage(imageSrc);
       },
-      [webcamRef]
+      [webcamRef, setImage]
   )
 
   //Img sending
@@ -71,12 +71,12 @@ const Snap = (props) => {
   const callAPI = (fileData) => {
       //Headers for first request, where sending form data w/ image
       const headers = {
-              'Authorization': 'Bearer 30697abbe1a83236f17ffbc3a5dc2c56bab060e4',
+              'Authorization': 'Bearer e4b06b1d66b27db1e9e376e258dbbd7f4a83bdf5',
               'Content-Type': 'multipart/form-data',
             }
 
       const headersForCalories = {
-        'Authorization': 'Bearer 30697abbe1a83236f17ffbc3a5dc2c56bab060e4'
+        'Authorization': 'Bearer e4b06b1d66b27db1e9e376e258dbbd7f4a83bdf5'
       }
       //initial request
           var request = axios.post(
@@ -194,26 +194,23 @@ const Snap = (props) => {
             mt: 1,
             mb: 4
           }}
-        >
-
-          
+        >          
           <label htmlFor="contained-button-file">
             <Input
-              accept="image/*"
+              accept="image/jpg"
               id="contained-button-file"
-              multiple
+              id="file"
               type="file"
               ref={inputFile}
               style={{display: 'none'}}
               onChange={onChangeFile}
             />
             <Button onClick={uploadFile} variant="contained" component="span">
-              Upload Snap
+              Upload File
             </Button>
           </label>
 
           <label htmlFor="icon-button-file">
-            <Input />
             <IconButton onClick={(event) => {capture(event)}}
               color="secondary"
               aria-label="upload picture"
@@ -226,21 +223,13 @@ const Snap = (props) => {
 
           {image != null ? 
                 <label htmlFor="contained-button-file">
-                <Input
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                />
                 <Button onClick={submit()} variant="contained" component="span">
-                  Upload Snap
+                  Send Snap
                 </Button>
               </label>
                 :
                 <p> Take a pic first to submit! </p>     
-            }
-
-          
+          }
 
         </Stack>
       </Container>
