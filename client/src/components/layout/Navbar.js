@@ -14,6 +14,12 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
+const logoTheme = createTheme({
+  typography: {
+    fontFamily: '"Comfortaa", sans-serif',
+  }
+});
+
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   let pages = [];
@@ -41,14 +47,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <AppBar position="static" style={{ background: "#b3e9d0", color: "#004928" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+        <ThemeProvider theme={logoTheme}>
           <Typography
             variant="h5"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex', fontWeight: 'bold' } }}
           >
-            CalMeHealthy
+            calmehealthy
           </Typography>
+          </ThemeProvider>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
