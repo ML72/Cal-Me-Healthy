@@ -22,11 +22,20 @@ import setAuthToken from './utils/setAuthToken';
 // Styles
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from '@mui/material/Box';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+AOS.init({
+  disable: function () {
+      var maxWidth = 800;
+      return window.innerWidth < maxWidth;
+  },
+  mirror: true
+});
 
 const ctheme = createTheme({
   palette: {

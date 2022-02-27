@@ -51,6 +51,8 @@ const Landing = ({ isAuthenticated }) => {
                 width: "70%"
               }}
               src="https://i.ibb.co/mN0hN8W/meal.png"
+              data-aos='fade-up'
+              data-aos-duration='500'
             />
             <Typography
               sx={{ pt: 2 }}
@@ -81,12 +83,12 @@ const Landing = ({ isAuthenticated }) => {
               spacing={2}
               justifyContent="center"
             >
-              <Link to="/signup" style={{ textDecoration: "none", width: "100%" }}>
+              <Link to="/signup" style={{ textDecoration: "none", width: "100%" }} data-aos='fade-right' data-aos-duration='500' data-aos-delay="300">
                 <Button variant="contained" size="large" fullWidth="true">
                   Sign up
                 </Button>
               </Link>
-              <Link to="/signin" style={{ textDecoration: "none", width: "100%" }}>
+              <Link to="/signin" style={{ textDecoration: "none", width: "100%" }} data-aos='fade-left' data-aos-duration='500' data-aos-delay="300">
                 <Button variant="outlined" size="large" fullWidth="true">
                   Sign in
                 </Button>
@@ -128,6 +130,7 @@ const Landing = ({ isAuthenticated }) => {
                     }}
                     image={card.thumbnail}
                     alt={card.alt}
+                    data-aos='fade-out' data-aos-duration='500' data-aos-delay="300"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography
