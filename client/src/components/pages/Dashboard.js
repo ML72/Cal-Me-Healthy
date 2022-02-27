@@ -1,9 +1,16 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, Component, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import Webcam from 'react-webcam';
 // import styled from 'styled-components';
 
 const Dashboard = () => {
+
+  //UPLOADING FILE
+  const sendRes = (details) => {
+    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
+    return requestBE.then(response => response.data)
+  }
 
   const inputFile = useRef(null);
 
@@ -18,9 +25,29 @@ const Dashboard = () => {
     inputFile.current.click();
   };
 
-  // const takePic = () => {
-  //   <video autoplay id="webcam" width="227" height="227"></video>
-  // }
+  // TAKING IMAGE
+  
+  const [image, setImage] = React.useState(null);
+  const webcamRef = React.useRef(null);
+
+  const dimensions = {width: 512, height: 512};
+
+  const capture = React.useCallback((event) => {
+          event.preventDefault();
+          const imageSrc = webcamRef.current.getScreenshot({width: 512, height: 512});
+          setImage(imageSrc);
+      },
+      [webcamRef]
+  )
+
+  const submit = () => {
+    console.log(image);
+    const data = new FormData();
+    data.append('image', image);
+    callAPI(data);
+  }
+
+  //calling the API
 
   const callAPI = (fileData) => {
       const headers = {
@@ -64,6 +91,7 @@ const Dashboard = () => {
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
+                    "foodGroup": response.data.foodFamily.name,
                     "nutritionalInfo": {
                       "calories": response2.data.nutritional_info.calories
                     },
@@ -92,11 +120,6 @@ const Dashboard = () => {
             }
           })
 }
-
-  const sendRes = (details) => {
-    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
-    return requestBE.then(response => response.data)
-  }
   
   return (
     <Fragment>
@@ -105,6 +128,28 @@ const Dashboard = () => {
       </Typography>
       <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={onChangeFile}/>
       <button onClick={onButtonClick}>Upload a File! </button>
+      <Webcam 
+        audio={false}
+        ref={webcamRef}
+        videoConstraints={dimensions}
+        screenshotFormat = "image/jpeg"
+      />
+      <button onClick={(event) => {capture(event)}}> Take a Pic! </button>
+      
+      {image && (
+          <img 
+            src={image}
+          />
+        )
+      }
+
+      {image != null ? 
+        <button onClick={submit()}> Submit pic </button> 
+        :
+        <p> Take a pic first to submit! </p>     
+      }
+      
+
     </Fragment>
   );
 }
