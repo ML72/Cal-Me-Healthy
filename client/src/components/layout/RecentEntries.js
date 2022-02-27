@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as React from "react";
 import { useEffect, useState  } from "react";
-import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,10 +12,6 @@ import Title from "./Title";
 // Generate Order Data
 function createData(id, name, date, time, mealType, calCount) {
   return { id, name, date, time, mealType, calCount };
-}
-
-function preventDefault(event) {
-  event.preventDefault();
 }
 
 const RecentEntries = () => {
@@ -80,9 +75,6 @@ const RecentEntries = () => {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        View more
-      </Link>
     </React.Fragment>
   );
 }

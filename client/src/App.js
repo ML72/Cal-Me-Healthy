@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
@@ -9,7 +9,6 @@ import Alerts from './components/layout/Alerts';
 import Landing from './components/pages/Landing';
 import Dashboard from './components/pages/Dashboard';
 import Snap from './components/pages/Snap';
-import Analytics from './components/pages/Analytics';
 import Signup from './components/pages/Signup';
 import Signin from './components/pages/Signin';
 import NotFound from './components/pages/NotFound';
@@ -81,7 +80,6 @@ const App = () => {
               <Route exact path="/signin" element={<Signin />} />
               <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               <Route exact path="/snap" element={<PrivateRoute><Snap /></PrivateRoute>} />
-              <Route exact path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>

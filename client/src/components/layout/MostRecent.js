@@ -27,7 +27,6 @@ const MostRecent = () => {
 		}
 	});
 	
-
   return (
     <React.Fragment>
       <Title>Last Entry</Title>

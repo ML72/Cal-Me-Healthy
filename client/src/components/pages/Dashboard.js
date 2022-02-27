@@ -10,7 +10,6 @@ import Link from "@mui/material/Link";
 import MostRecent from "../layout/MostRecent";
 import RecentEntries from "../layout/RecentEntries";
 import WeeklyChart from "../layout/WeeklyChart";
-import NewEntry from "../layout/NewEntry";
 
 const Copyright = (props) => {
   return (
@@ -42,21 +41,8 @@ const Dashboard = () => {
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          {/* New Entry */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                height: 320
-              }}
-            >
-              <NewEntry />
-            </Paper>
-          </Grid>
           {/* Daily Stats */}
-          <Grid item xs={12} md={8} lg={9}>
+          <Grid item xs={12}>
             <Paper
               sx={{
                 p: 2,

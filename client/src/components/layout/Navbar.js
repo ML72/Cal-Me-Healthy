@@ -30,8 +30,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       {text: 'Sign In', link: '/signin'}];
   } else {
     pages = [{text: 'Dashboard', link: '/dashboard'},
-      {text: 'Snap', link: '/snap'},
-      {text: 'Analytics', link: '/analytics'}];
+      {text: 'Snap', link: '/snap'}];
   }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
