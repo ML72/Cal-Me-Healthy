@@ -2,14 +2,20 @@ import React, { Fragment, useRef, Component, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-// import styled from 'styled-components';
 
 const Dashboard = () => {
 
   //UPLOADING FILE
-  const sendRes = (details) => {
-    const requestBE = axios.post("http://localhost:5000/api/food/snap", {details})
-    return requestBE.then(response => response.data)
+  const sendRes = async (details) => {
+    //const requestBE = 
+    await axios.post("http://localhost:5000/api/food/snap", {details})
+    // try {
+    //   return requestBE.then(response => response.data)
+    // }
+    // catch {
+    //   console.error(requestBE.error)
+    // }
+    //return requestBE.then(response => response.data)
   }
 
   const inputFile = useRef(null);
@@ -60,18 +66,19 @@ const Dashboard = () => {
     }
     
     return new File([u8arr], filename, {type:mime});
-}
+  }
 
+  const [foodVals, setFoodVals] = React.useState(0);
 
   //calling the API
 
   const callAPI = (fileData) => {
       const headers = {
-              'Authorization': 'Bearer 020c0a16973684590ce180f20386bddd937f3dba',
+              'Authorization': 'Bearer 6476c732c3f6838b3b356b57e8994f5ce0050290',
               'Content-Type': 'multipart/form-data',
             }
       const headersForCalories = {
-        'Authorization': 'Bearer 020c0a16973684590ce180f20386bddd937f3dba'
+        'Authorization': 'Bearer 6476c732c3f6838b3b356b57e8994f5ce0050290'
       }
       //initial request
           var request = axios.post(
@@ -121,9 +128,8 @@ const Dashboard = () => {
                   }
 
                     console.log(details);
+                    setFoodVals(response2.data.nutritional_info.calories);
                     sendRes(details);
-                  //response.json(details);
-                  //response.json(response2.data.nutritional_info.calories)
                 }
                 catch {
                   console.error(response2.error)
@@ -135,7 +141,8 @@ const Dashboard = () => {
               console.error(response.error)
             }
           })
-}
+  }
+
   
   return (
     <Fragment>
@@ -165,6 +172,11 @@ const Dashboard = () => {
         <p> Take a pic first to submit! </p>     
       }
       
+      {foodVals !== '' ?
+        <p id = "results"> The calories in this food item are {foodVals} </p>
+        :
+        <p> </p>
+      }
 
     </Fragment>
   );
