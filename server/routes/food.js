@@ -26,8 +26,8 @@ router.post('/snap', auth, [
         const { details } = req.body;
         const { foodName, foodGroup, servingSize, nutritionalInfo, dailyIntakeReference, totalNutrients } = details;
 
-        if(!foodName || !foodGroup || !servingSize || !nutritionalInfo || !dailyIntakeReference || !totalNutrients) {
-            return res.status(400).json({ errors: [ { msg: 'Please provide full details of your snap' } ]});
+        if(!foodName) {
+            return res.status(400).json({ errors: [ { msg: 'Please provide a name for your food!' } ]});
         }
 
         // create new snapshot
