@@ -107,7 +107,8 @@ const Dashboard = () => {
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
-                    "foodGroup": response.data.foodFamily.name,
+                    "foodGroup": response.data.foodFamily[0].name,
+                    "occasion": response.data.occasion,
                     "nutritionalInfo": {
                       "calories": response2.data.nutritional_info.calories
                     },
@@ -117,7 +118,7 @@ const Dashboard = () => {
                     "totalNutrients": {
                       ...response2.data.nutritional_info.totalNutrients
                     },
-                    "servingSize": response2.data.nutritional_info.serving_size
+                    "servingSize": response2.data.serving_size
                   }
 
                     console.log(details);
