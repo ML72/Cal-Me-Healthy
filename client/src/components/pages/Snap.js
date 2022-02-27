@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from '@mui/material/Typography';
 import { Link, Navigate } from 'react-router-dom';
-import React, { Fragment, useRef, Component, useState } from 'react';
+import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
 
@@ -41,7 +41,7 @@ const Snap = (props) => {
           const imageSrc = webcamRef.current.getScreenshot({width: 512, height: 512});
           setImage(imageSrc);
       },
-      [webcamRef]
+      [webcamRef, setImage]
   )
 
   //Img sending
@@ -71,12 +71,12 @@ const Snap = (props) => {
   const callAPI = (fileData) => {
       //Headers for first request, where sending form data w/ image
       const headers = {
-              'Authorization': 'Bearer 30697abbe1a83236f17ffbc3a5dc2c56bab060e4',
+              'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb',
               'Content-Type': 'multipart/form-data',
             }
 
       const headersForCalories = {
-        'Authorization': 'Bearer 30697abbe1a83236f17ffbc3a5dc2c56bab060e4'
+        'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb'
       }
       //initial request
           var request = axios.post(
@@ -118,7 +118,7 @@ const Snap = (props) => {
 
                   console.log(details);
                   setFoodVals(response2.data.nutritional_info.calories);
-                  sendRes(details);
+                  //sendRes(details);
                 }
                 catch {
                   console.error(response2.error)
@@ -132,11 +132,25 @@ const Snap = (props) => {
           })
   }
 
+  //CURRENT AREA BEING EDITED
 
-  const sendRes = async (details) => {
-      await axios.post("/api/food/snap", {details})
-  }
 
+  // const [detailsInput, setDetailsInput] = useState({
+  //   "foodName": "",
+  //   "foodGroup": "".
+  //   "servingSize"
+  // })
+
+  // // const sendRes = (details) => {
+  // //   await axios.post("/api/food/snap", {details})
+  // // }
+
+  // useEffect(async (details) => {
+  
+  //     await axios.post("/api/food/snap", {details})
+ 
+  // });
+  
 
   const uploadFile = () => {
     inputFile.current.click();
@@ -194,26 +208,23 @@ const Snap = (props) => {
             mt: 1,
             mb: 4
           }}
-        >
-
-          
+        >          
           <label htmlFor="contained-button-file">
             <Input
-              accept="image/*"
+              accept="image/jpg"
               id="contained-button-file"
-              multiple
+              id="file"
               type="file"
               ref={inputFile}
               style={{display: 'none'}}
               onChange={onChangeFile}
             />
             <Button onClick={uploadFile} variant="contained" component="span">
-              Upload Snap
+              Upload File
             </Button>
           </label>
 
           <label htmlFor="icon-button-file">
-            <Input />
             <IconButton onClick={(event) => {capture(event)}}
               color="secondary"
               aria-label="upload picture"
@@ -226,21 +237,13 @@ const Snap = (props) => {
 
           {image != null ? 
                 <label htmlFor="contained-button-file">
-                <Input
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                />
-                <Button onClick={submit()} variant="contained" component="span">
-                  Upload Snap
+                <Button onClick={submit} variant="contained" component="span">
+                  Send Snap
                 </Button>
               </label>
                 :
                 <p> Take a pic first to submit! </p>     
-            }
-
-          
+          }
 
         </Stack>
       </Container>
