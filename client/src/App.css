@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.overlap {
+  position: absolute;
+}
+
+.overlap-1 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.overlap-2 {
+  position: absolute;
+  left: 19px;
+  top: 69px;
+}
+
+
+.parent {
+  position: relative;
+}
