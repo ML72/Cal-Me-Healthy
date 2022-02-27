@@ -71,8 +71,6 @@ router.get('/entry', auth, async (req, res) => {
 
         let { index } = req.query;
 
-        console.log("index is " + index);
-
         if(!index) {
             index = 1;
         }
@@ -89,6 +87,48 @@ router.get('/entry', auth, async (req, res) => {
 
         res.json({
             snapshot
+        });
+    
+    } catch(err) { 
+
+        console.error(err.message);
+        res.status(500).json({ errors: [ { msg: 'Server Error - Please check parameters and try again' } ]});
+    }
+
+});
+
+// @route GET api/food/history/page/:page
+// @desc get information about a specific page of 10 snapshots
+// @access private
+router.get('/history/page/:page', auth, async (req, res) => {
+
+    try {
+
+        let { page } = req.params;
+
+        if(!page) {
+            page = 1;
+        }
+
+        // get and test page index
+        let user = await User.findById(req.user.id);
+        
+        if(page < 1 || page > Math.ceil(user.snapshots.length / 10)) {
+            return res.status(400).json({ errors: [ { msg: 'No entries found at this index for ' + user.email } ]});
+        }
+
+        // get snapshots
+        let snapshotIndices = user.snapshots.slice(Math.max(0, user.snapshots.length - (10 * page) + 1), user.snapshots.length - (10 * (page - 1)));
+        let snapshots = [];
+
+        let snapshot = null;
+        for(let i = 0; i < snapshotIndices.length; i++) {
+            snapshot = await Snapshot.findById(snapshotIndices[i]);
+            snapshots.push(snapshot);
+        }
+
+        res.json({
+            snapshots
         });
     
     } catch(err) { 
