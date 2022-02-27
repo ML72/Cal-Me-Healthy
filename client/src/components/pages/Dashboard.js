@@ -8,7 +8,7 @@ const Dashboard = () => {
   //UPLOADING FILE
   const sendRes = async (details) => {
     //const requestBE = 
-    await axios.post("http://localhost:5000/api/food/snap", {details})
+    await axios.post("/api/food/snap", {details})
     // try {
     //   return requestBE.then(response => response.data)
     // }

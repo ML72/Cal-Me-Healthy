@@ -30,7 +30,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       {text: 'Sign In', link: '/signin'}];
   } else {
     pages = [{text: 'Dashboard', link: '/dashboard'},
-      {text: 'History', link: '/history'},
+      {text: 'Snap', link: '/snap'},
       {text: 'Analytics', link: '/analytics'}];
   }
 

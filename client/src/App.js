@@ -8,6 +8,8 @@ import Navbar from './components/layout/Navbar';
 import Alerts from './components/layout/Alerts';
 import Landing from './components/pages/Landing';
 import Dashboard from './components/pages/Dashboard';
+import Snap from './components/pages/Snap';
+import Analytics from './components/pages/Analytics';
 import Signup from './components/pages/Signup';
 import Signin from './components/pages/Signin';
 import NotFound from './components/pages/NotFound';
@@ -70,6 +72,8 @@ const App = () => {
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/signin" element={<Signin />} />
             <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route exact path="/snap" element={<PrivateRoute><Snap /></PrivateRoute>} />
+            <Route exact path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
