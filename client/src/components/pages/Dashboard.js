@@ -8,7 +8,7 @@ const Dashboard = () => {
 
   //UPLOADING FILE
   const sendRes = (details) => {
-    const requestBE = axios.post("http://localhost:5000/api/food/snap", details)
+    const requestBE = axios.post("http://localhost:5000/api/food/snap", {details})
     return requestBE.then(response => response.data)
   }
 
@@ -67,11 +67,11 @@ const Dashboard = () => {
 
   const callAPI = (fileData) => {
       const headers = {
-              'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b',
+              'Authorization': 'Bearer 020c0a16973684590ce180f20386bddd937f3dba',
               'Content-Type': 'multipart/form-data',
             }
       const headersForCalories = {
-        'Authorization': 'Bearer b8f1ff01d7aab956d067a27997600439d062af3b'
+        'Authorization': 'Bearer 020c0a16973684590ce180f20386bddd937f3dba'
       }
       //initial request
           var request = axios.post(
@@ -107,7 +107,7 @@ const Dashboard = () => {
 
                   var details = {
                     "foodName": response.data.recognition_results[0].name,
-                    "foodGroup": response.data.foodFamily.name,
+                    "foodGroup": response.data.foodFamily[0].name,
                     "nutritionalInfo": {
                       "calories": response2.data.nutritional_info.calories
                     },
@@ -117,7 +117,7 @@ const Dashboard = () => {
                     "totalNutrients": {
                       ...response2.data.nutritional_info.totalNutrients
                     },
-                    "servingSize": response2.data.nutritional_info.serving_size
+                    "servingSize": response2.data.serving_size
                   }
 
                     console.log(details);

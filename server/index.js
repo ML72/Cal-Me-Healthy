@@ -2,9 +2,12 @@ const express = require("express");
 const connectDB = require('./config/database');
 const { PORT } = require('./settings');
 
+const cors = require('cors')
+
 // Init app
 const app = express();
 app.use(express.json({ extended: false }));
+app.use(cors())
 
 // Connect to database
 connectDB();
