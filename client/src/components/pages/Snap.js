@@ -10,6 +10,7 @@ import { Link, Navigate } from 'react-router-dom';
 import React, { Fragment, useRef, Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
+import  { LOGMEAL_TOKEN } from '../../../../server/settings';
 
 const Input = styled("input")({
   display: "none"
@@ -71,12 +72,12 @@ const Snap = (props) => {
   const callAPI = (fileData) => {
       //Headers for first request, where sending form data w/ image
       const headers = {
-              'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb',
+              'Authorization': LOGMEAL_TOKEN,
               'Content-Type': 'multipart/form-data',
             }
 
       const headersForCalories = {
-        'Authorization': 'Bearer 361e38ff582a835e138f424a164096025c463bbb'
+        'Authorization': LOGMEAL_TOKEN
       }
       //initial request
           var request = axios.post(
