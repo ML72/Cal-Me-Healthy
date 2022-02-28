@@ -17,7 +17,7 @@ const Input = styled("input")({
   display: "none"
 });
 
-const Snap = (props) => {
+const Snap = ({ setAlert }) => {
   //For showing # of calories
   const [foodVals, setFoodVals] = React.useState(0);
 
@@ -270,4 +270,4 @@ const Snap = (props) => {
   );
 }
 
-export default Snap;
+export default connect({ setAlert })(Snap);
